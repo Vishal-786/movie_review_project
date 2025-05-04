@@ -6,13 +6,9 @@ from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 import os
 
-nltk_data_path = os.path.join(os.path.dirname(__file__), 'nltk_data')
-nltk.data.path.append(nltk_data_path)
-
-# Manually download required data
-nltk.download('punkt_tab', download_dir=nltk_data_path)
-nltk.download('stopwords', download_dir=nltk_data_path)
-nltk.download('wordnet', download_dir=nltk_data_path)
+nltk.download('punkt_tab')
+nltk.download('stopwords')
+nltk.download('wordnet')
 
 
 # Load model and vectorizer
