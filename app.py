@@ -14,37 +14,31 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 import numpy as np 
 import nltk
 
-import nltk
-
-import nltk
-
-# Download the necessary NLTK resources if not already present
 def download_nltk_resources():
     try:
         nltk.data.find('tokenizers/punkt')
     except LookupError:
-        print("Downloading punkt...")
-        nltk.download('punkt')
-    
-    try:
-        nltk.data.find('tokenizers/punkt_tab')
-    except LookupError:
-        print("Downloading punkt_tab...")
-        nltk.download('punkt')
-    
+        try:
+            nltk.download('punkt')
+        except Exception as e:
+            st.error(f"Failed to download NLTK punkt: {e}")
+
     try:
         nltk.data.find('corpora/stopwords')
     except LookupError:
-        print("Downloading stopwords...")
-        nltk.download('stopwords')
-    
+        try:
+            nltk.download('stopwords')
+        except Exception as e:
+            st.error(f"Failed to download NLTK stopwords: {e}")
+
     try:
         nltk.data.find('corpora/wordnet')
     except LookupError:
-        print("Downloading wordnet...")
-        nltk.download('wordnet')
+        try:
+            nltk.download('wordnet')
+        except Exception as e:
+            st.error(f"Failed to download NLTK wordnet: {e}")
 
-# Ensure resources are available
 download_nltk_resources()
 
 
