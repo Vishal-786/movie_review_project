@@ -1,5 +1,4 @@
-# Import Libraray
-
+# Import Libraries
 import streamlit as st
 import joblib
 from keras.models import load_model
@@ -12,8 +11,8 @@ import gensim
 from gensim.models import Word2Vec
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 import numpy as np 
-import nltk
 
+# Download required NLTK resources
 def download_nltk_resources():
     try:
         nltk.data.find('tokenizers/punkt')
@@ -39,10 +38,8 @@ def download_nltk_resources():
         except Exception as e:
             st.error(f"Failed to download NLTK wordnet: {e}")
 
+# Ensure NLTK resources are available
 download_nltk_resources()
-
-
-
 
 # Load model and Word2Vec
 model = load_model('lstm_model.keras')
@@ -53,7 +50,6 @@ lemmatizer = WordNetLemmatizer()
 
 # Clean input text
 def handle_negation(text):
-    # Use regex to match negations as full words
     negations = [
         "don't", "isn't", "aren't", "didn't", "can't", "won't", "never", 
         "no", "nothing", "none", "nobody", "neither", "nowhere", 
@@ -61,7 +57,6 @@ def handle_negation(text):
         "weren't", "shouldn't", "wouldn't", "couldn't", "hasn't", "haven't"
     ]
     for neg in negations:
-        # Use regex to replace whole word negation only
         pattern = r'\b' + re.escape(neg) + r'\b'
         text = re.sub(pattern, 'NOT', text)
     return text
@@ -74,7 +69,6 @@ def clean_text(text):
     tokens = nltk.word_tokenize(text)
     tokens = [lemmatizer.lemmatize(word) for word in tokens if word not in stop_words]
     return ' '.join(tokens)
-
 
 # Sentence into vector
 def sent_to_vec(sentence):
@@ -91,6 +85,8 @@ if st.button("Predict"):
         new_sentence = word_tokenize(cleaned)  # Tokenize the cleaned sentence
         new_sentence_vector = sent_to_vec(new_sentence)  # Convert to word vectors
         new_sentence_padded = pad_sequences([new_sentence_vector], maxlen=50, padding='post', dtype='float32')  # Pad the sequence
+        
+        # Predict sentiment
         prediction = model.predict(new_sentence_padded)[0]
 
         if prediction > 0.5:
