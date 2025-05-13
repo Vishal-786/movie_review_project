@@ -16,38 +16,17 @@ import nltk
 import streamlit as st
 
 import nltk
+import nltk
+import streamlit as st
 
-# Download necessary resources
-nltk.download('punkt')
-nltk.download('stopwords')
-
-# Function to download necessary NLTK resources
+@st.cache_resource
 def download_nltk_resources():
-    try:
-        nltk.data.find('tokenizers/punkt')
-    except LookupError:
-        try:
-            nltk.download('punkt', download_dir='/tmp/nltk_data')
-        except Exception as e:
-            st.error(f"Failed to download NLTK punkt: {e}")
+    nltk.download('punkt')
+    nltk.download('stopwords')
 
-    try:
-        nltk.data.find('corpora/stopwords')
-    except LookupError:
-        try:
-            nltk.download('stopwords', download_dir='/tmp/nltk_data')
-        except Exception as e:
-            st.error(f"Failed to download NLTK stopwords: {e}")
-
-    try:
-        nltk.data.find('corpora/wordnet')
-    except LookupError:
-        try:
-            nltk.download('wordnet', download_dir='/tmp/nltk_data')
-        except Exception as e:
-            st.error(f"Failed to download NLTK wordnet: {e}")
-
+# Call this function to ensure resources are downloaded
 download_nltk_resources()
+
 
 
 # Load model and Word2Vec
