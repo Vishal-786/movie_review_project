@@ -19,6 +19,9 @@ import nltk
 import nltk
 import streamlit as st
 
+import nltk
+
+nltk.download('punkt_tab')
 @st.cache_resource
 def download_nltk_resources():
     nltk.download('punkt')
