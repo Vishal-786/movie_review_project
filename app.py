@@ -16,22 +16,37 @@ import nltk
 
 import nltk
 
-# Download required NLTK resources if not already present
+import nltk
+
+# Download the necessary NLTK resources if not already present
 def download_nltk_resources():
     try:
         nltk.data.find('tokenizers/punkt')
     except LookupError:
+        print("Downloading punkt...")
         nltk.download('punkt')
+    
+    try:
+        nltk.data.find('tokenizers/punkt_tab')
+    except LookupError:
+        print("Downloading punkt_tab...")
+        nltk.download('punkt')
+    
     try:
         nltk.data.find('corpora/stopwords')
     except LookupError:
+        print("Downloading stopwords...")
         nltk.download('stopwords')
+    
     try:
         nltk.data.find('corpora/wordnet')
     except LookupError:
+        print("Downloading wordnet...")
         nltk.download('wordnet')
 
+# Ensure resources are available
 download_nltk_resources()
+
 
 
 
