@@ -14,24 +14,25 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 import numpy as np 
 import nltk
 
-# Check and download required NLTK data
+import nltk
+
+# Download required NLTK resources if not already present
 def download_nltk_resources():
     try:
         nltk.data.find('tokenizers/punkt')
     except LookupError:
         nltk.download('punkt')
-    
     try:
         nltk.data.find('corpora/stopwords')
     except LookupError:
         nltk.download('stopwords')
-
     try:
         nltk.data.find('corpora/wordnet')
     except LookupError:
         nltk.download('wordnet')
 
 download_nltk_resources()
+
 
 
 # Load model and Word2Vec
