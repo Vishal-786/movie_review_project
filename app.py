@@ -11,11 +11,18 @@ import gensim
 from gensim.models import Word2Vec
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 import numpy as np 
+from nltk.data import find
 
-# Download necessary NLTK resources
-nltk.download('punkt')  # Tokenizer
-nltk.download('stopwords')  # Stopwords
-nltk.download('punkt_tab')  # For handling punctuation tokenization
+def safe_download(resource):
+    try:
+        find(resource)
+    except LookupError:
+        nltk.download(resource.split("/")[-1])
+
+safe_download('tokenizers/punkt')
+safe_download('corpora/stopwords')
+safe_download('tokenizers/punkt_tab')
+
 
 
 # Load model and Word2Vec
