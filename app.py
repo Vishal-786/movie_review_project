@@ -17,26 +17,18 @@ def download_nltk_resources():
     try:
         nltk.data.find('tokenizers/punkt')
     except LookupError:
-        try:
-            nltk.download('punkt')
-        except Exception as e:
-            st.error(f"Failed to download NLTK punkt: {e}")
+        st.error("Punkt tokenizer not found. Please upload the NLTK resources to the app.")
 
     try:
         nltk.data.find('corpora/stopwords')
     except LookupError:
-        try:
-            nltk.download('stopwords')
-        except Exception as e:
-            st.error(f"Failed to download NLTK stopwords: {e}")
+        st.error("Stopwords not found. Please upload the NLTK resources to the app.")
 
     try:
         nltk.data.find('corpora/wordnet')
     except LookupError:
-        try:
-            nltk.download('wordnet')
-        except Exception as e:
-            st.error(f"Failed to download NLTK wordnet: {e}")
+        st.error("Wordnet not found. Please upload the NLTK resources to the app.")
+
 
 # Ensure NLTK resources are available
 download_nltk_resources()
