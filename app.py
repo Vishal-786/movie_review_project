@@ -15,7 +15,6 @@ import numpy as np
 
 
 nltk.download('stopwords')
-nltk.download('punkt')
 nltk.download('wordnet')
 
 # Load model and Word2Vec
