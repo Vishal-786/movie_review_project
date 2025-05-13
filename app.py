@@ -22,6 +22,8 @@ def safe_download(resource):
 safe_download('tokenizers/punkt')
 safe_download('corpora/stopwords')
 safe_download('tokenizers/punkt_tab')
+nltk.download('wordnet')
+
 
 
 
