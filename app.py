@@ -15,6 +15,12 @@ import numpy as np
 import nltk
 import streamlit as st
 
+import nltk
+
+# Download necessary resources
+nltk.download('punkt')
+nltk.download('stopwords')
+
 # Function to download necessary NLTK resources
 def download_nltk_resources():
     try:
