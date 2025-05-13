@@ -1,5 +1,7 @@
 streamlit
-joblib
+tensorflow
+gensim
+nltk
+numpy
 scikit-learn
 pandas
-nltk

@@ -1,22 +1,24 @@
+# Import Libraray
+
 import streamlit as st
 import joblib
 from keras.models import load_model
 import re
 import nltk
 from nltk.corpus import stopwords
-from nltk.tokenize import word_tokenize  # Added import
+from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
 import gensim
 from gensim.models import Word2Vec
 from tensorflow.keras.preprocessing.sequence import pad_sequences
-import numpy as np  # Added import for numpy
+import numpy as np 
 
-# Download necessary NLTK data
+
 nltk.download('stopwords')
 nltk.download('punkt')
 nltk.download('wordnet')
 
-# Load model and vectorizer
+# Load model and Word2Vec
 model = load_model('lstm_model.keras')
 word2vec = Word2Vec.load('word2vec.model')
 
@@ -24,12 +26,29 @@ stop_words = set(stopwords.words('english'))
 lemmatizer = WordNetLemmatizer()
 
 # Clean input text
+def handle_negation(text):
+    # Use regex to match negations as full words
+    negations = [
+        "don't", "isn't", "aren't", "didn't", "can't", "won't", "never", 
+        "no", "nothing", "none", "nobody", "neither", "nowhere", 
+        "without", "hardly", "scarcely", "barely", "not", "doesn't", "wasn't", 
+        "weren't", "shouldn't", "wouldn't", "couldn't", "hasn't", "haven't"
+    ]
+    for neg in negations:
+        # Use regex to replace whole word negation only
+        pattern = r'\b' + re.escape(neg) + r'\b'
+        text = re.sub(pattern, 'NOT', text)
+    return text
+
 def clean_text(text):
+    text = text.lower()
+    text = handle_negation(text)  # Handle negation first
     text = re.sub(r'<.*?>', '', text)  # Remove HTML
-    text = re.sub(r'[^a-zA-Z]', ' ', text).lower()
-    tokens = word_tokenize(text)
+    text = re.sub(r"[^a-zA-Z0-9\s]", "", text)  # Remove punctuation
+    tokens = nltk.word_tokenize(text)
     tokens = [lemmatizer.lemmatize(word) for word in tokens if word not in stop_words]
     return ' '.join(tokens)
+
 
 # Sentence into vector
 def sent_to_vec(sentence):
