@@ -12,26 +12,34 @@ from gensim.models import Word2Vec
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 import numpy as np 
 
-# Download required NLTK resources
+# Function to download necessary NLTK resources
 def download_nltk_resources():
     try:
         nltk.data.find('tokenizers/punkt')
     except LookupError:
-        st.error("Punkt tokenizer not found. Please upload the NLTK resources to the app.")
+        try:
+            nltk.download('punkt')
+        except Exception as e:
+            st.error(f"Failed to download NLTK punkt: {e}")
 
     try:
         nltk.data.find('corpora/stopwords')
     except LookupError:
-        st.error("Stopwords not found. Please upload the NLTK resources to the app.")
+        try:
+            nltk.download('stopwords')
+        except Exception as e:
+            st.error(f"Failed to download NLTK stopwords: {e}")
 
     try:
         nltk.data.find('corpora/wordnet')
     except LookupError:
-        st.error("Wordnet not found. Please upload the NLTK resources to the app.")
+        try:
+            nltk.download('wordnet')
+        except Exception as e:
+            st.error(f"Failed to download NLTK wordnet: {e}")
 
-
-# Ensure NLTK resources are available
 download_nltk_resources()
+
 
 # Load model and Word2Vec
 model = load_model('lstm_model.keras')
